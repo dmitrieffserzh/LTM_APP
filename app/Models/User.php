@@ -11,10 +11,29 @@ class User extends Authenticatable implements MustVerifyEmail {
     use Notifiable;
 
     protected $fillable = [
-        'name', 'email', 'password',
+        'email',
+        'password',
+        'registration_ip',
+        'registration_agent'
     ];
 
     protected $hidden = [
-        'password', 'remember_token',
+        'route_default',
+        'route',
+        'password',
+        'remember_token',
+        'registration_ip',
+        'registration_agent'
     ];
+
+    public function getRouteKeyName() {
+        return 'route_default';
+    }
+
+
+
+    // RELATIONS
+    public function profile() {
+        return $this->hasOne(Profile::class);
+    }
 }
