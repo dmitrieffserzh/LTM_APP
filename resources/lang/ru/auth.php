@@ -13,13 +13,14 @@ return [
     |
     */
     'login' => 'Войти',
+    'login_username' => 'Логин',
     'login_email' => 'E-mail',
     'login_password' => 'Пароль',
     'login_remember_me' => 'Запомнить',
     'login_forgot_password' => 'Забыли пароль?',
 
     'register' => 'Регистрация',
-    'register_name' => 'Имя',
+    'register_username' => 'Логин',
     'register_email' => 'E-mail',
     'register_password' => 'Пароль',
     'register_password_confirmation' => 'Подтвердите пароль',
