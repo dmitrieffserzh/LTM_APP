@@ -14,3 +14,5 @@
 Auth::routes(['verify' => true]);
 
 Route::get('/', 'MainController@index')->name('main');
+Route::post('/check_username', 'Auth\RegisterController@checkUsername');
+

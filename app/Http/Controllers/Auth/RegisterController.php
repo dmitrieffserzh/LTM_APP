@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use function GuzzleHttp\Promise\all;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -42,5 +44,22 @@ class RegisterController extends Controller {
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+protected function checkUsername(Request $request) {
+
+        if(request()->ajax()) {
+
+            $validator = Validator::make($request->all(), [
+                'username' => ['required', 'string', 'min:3', 'max:16', 'unique:users']
+            ]);
+
+            if ($validator->passes()) {
+                return response()->json(['success'=>'done', 'error' => [] ]);
+            }
+
+            return response()->json(['success'=>'false', 'error'=>$validator->errors()->all()]);
+
+        }
     }
 }

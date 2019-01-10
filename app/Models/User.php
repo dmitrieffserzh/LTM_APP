@@ -11,8 +11,8 @@ class User extends Authenticatable implements MustVerifyEmail {
     use Notifiable;
 
     protected $fillable = [
+        'username',
         'email',
-        'nickname',
         'password',
     ];
 
@@ -25,7 +25,7 @@ class User extends Authenticatable implements MustVerifyEmail {
     ];
 
     public function getRouteKeyName() {
-        return 'route_default';
+        return 'route';
     }
 
 

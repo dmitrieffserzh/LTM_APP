@@ -15,7 +15,7 @@
                             <label for="name" class="col-md-4 col-form-label text-md-right">@lang('auth.register_username')</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" required autofocus>
+                                <input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" required autofocus>
 
                                 @if ($errors->has('username'))
                                     <span class="invalid-feedback" role="alert">
@@ -74,4 +74,22 @@
         </div>
     </div>
 </div>
+
+<script>
+    $('#username').on('change', function () {
+
+       var data = $(this);
+
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            data: data,
+            type: 'POST',
+            url: '/check_username',
+            success: function(result){
+                console.log(result);
+            }
+        });
+
+    })
+</script>
 @endsection
