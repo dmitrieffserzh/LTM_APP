@@ -32,9 +32,9 @@ class RegisterController extends Controller {
 
     protected function validator(array $data) {
         return Validator::make($data, [
-            'username' => ['required', 'string', 'min:3', 'max:16', 'unique:users'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'username'  => ['required', 'string', 'min:3', 'max:15', 'unique:users', 'regex:/^[a-z0-9_]+$/u'],
+            'email'     => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password'  => ['required', 'string', 'min:6', 'confirmed'],
         ]);
     }
 
@@ -46,20 +46,26 @@ class RegisterController extends Controller {
         ]);
     }
 
-protected function checkUsername(Request $request) {
+    protected function checkUsername(Request $request) {
 
         if(request()->ajax()) {
 
-            $validator = Validator::make($request->all(), [
-                'username' => ['required', 'string', 'min:3', 'max:16', 'unique:users']
-            ]);
+            $validator = Validator::make($request->all(),
+                ['username'     => ['required', 'string', 'min:3', 'max:15', 'unique:users', 'regex:/^[a-z0-9_]+$/u']],
+                ['required'     => 'Не может быть пустым!',
+                    'min'       => 'Минимальная длина 3 символа!',
+                    'max'       => 'Мaксимальная длина 15 символов!',
+                    'unique'    => 'Логин занят!',
+                    'regex'     => 'Разрешены символы a-z, 0-9 и _!']
+            );
 
-            if ($validator->passes()) {
-                return response()->json(['success'=>'done', 'error' => [] ]);
-            }
+            if ($validator->passes())
+                return response()->json(['success'=> true ]);
 
-            return response()->json(['success'=>'false', 'error'=>$validator->errors()->all()]);
+            return response()->json(['success'=> false, 'error'=>$validator->errors()->all()]);
 
         }
+
+       return abort(404);
     }
 }

@@ -136,9 +136,12 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
-        ],
+        'username' => [
+            'unique' => 'Логин занят!'
+            ],
+        'email' => [
+            'unique' => 'E-mail уже зарегистрирован!'
+        ]
     ],
 
     /*
