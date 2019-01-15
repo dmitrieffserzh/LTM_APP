@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">@lang('auth.register')</div>
@@ -96,24 +96,16 @@
                 type: 'POST',
                 url: '/check_username',
                 success: function (result) {
-                    if (result.success === false) {
 
-                        result.error.forEach(function(error) {
-                            input.parent().find('.invalid-feedback').text(error);
-                        });
+                    let mainStat    = (result.success) ? 'is-valid' : 'is-invalid';
+                    let oldStat     = (result.success) ? 'is-invalid' : 'is-valid';
+                    let errorMes    = result.error.join(' ') || '';
 
-                        if(input.hasClass('is-valid'))
-                            input.removeClass('is-valid');
+                    if(input.hasClass(oldStat))
+                        input.removeClass(oldStat);
 
-                        input.addClass('is-invalid');
-
-                    } else if (result.success === true) {
-                        if(input.hasClass('is-invalid'))
-                            input.removeClass('is-invalid');
-
-                        input.addClass('is-valid');
-                        input.parent().find('.invalid-feedback').text('');
-                    }
+                    input.addClass(mainStat);
+                    input.parent().find('.invalid-feedback').text(errorMes);
                 }
             });
 

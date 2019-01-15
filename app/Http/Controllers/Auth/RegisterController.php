@@ -60,7 +60,7 @@ class RegisterController extends Controller {
             );
 
             if ($validator->passes())
-                return response()->json(['success'=> true ]);
+                return response()->json(['success'=> true, 'error' => [''] ]);
 
             return response()->json(['success'=> false, 'error'=>$validator->errors()->all()]);
 
